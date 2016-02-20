@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.votafore.organizer.R;
-import com.votafore.organizer.active.ITaskData;
+import com.votafore.organizer.model.ITaskData;
 
 public class FragmentPageDaySettings extends Fragment {
 

@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.votafore.organizer.R;
-import com.votafore.organizer.active.ITaskData;
+import com.votafore.organizer.model.ITaskData;
 
 import java.util.ArrayList;
 

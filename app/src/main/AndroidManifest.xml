@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.votafore.organizer">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ActivityMain">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".active.ActivityTask"
+            android:label="@string/title_activity_task"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:name=".support.HandlingService" />
+
+        <receiver
+            android:name=".support.ReceiverForAlarm"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.votafore.organizer.START_SHEDULE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".active.ActivityDialogTask"
+            android:label="@string/title_activity_activity_dialog_task"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
+
+        <activity
+            android:name=".active.ActivityDialogCurTaskList"
+            android:label="@string/title_activity_dialog_task_list"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
+
+        <service
+            android:name=".support.NotifyService"
+            android:exported="false" />
+
+        <receiver android:name=".TaskWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.votafore.organizer.widget.ACTION_WIDGET_RECEIVER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/task_widget_info" />
+        </receiver>
+    </application>
+
+</manifest>

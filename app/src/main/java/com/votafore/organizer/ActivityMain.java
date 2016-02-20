@@ -9,10 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.votafore.organizer.active.ActivityTask;
@@ -28,7 +26,7 @@ public class ActivityMain extends AppCompatActivity {
 
     public static int FIRST_SERVICE_ALARM_ID = 10000;
 
-    public static String START_SHEDULE = "com.votafore.organizer.START_SHEDULE";
+    //public static String START_SHEDULE = "com.votafore.organizer.START_SHEDULE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,7 @@ public class ActivityMain extends AppCompatActivity {
         GridView lTaskList = (GridView)findViewById(R.id.task_list);
 
         tManager = TaskManager.getInstance(getApplicationContext());
-        lAdapter = new ListAdapter(getApplicationContext(), R.layout.template_task_list_item, tManager.getTaskList());
+        lAdapter = new ListAdapter(getApplicationContext(), R.layout.item_task, tManager.getTaskList());
 
         lTaskList.setAdapter(lAdapter);
 
@@ -78,7 +76,7 @@ public class ActivityMain extends AppCompatActivity {
                 List<TaskManager.Task> list = tManager.getTaskList();
 
                 lAdapter.setTaskList(list);
-                lAdapter.notifyDataSetChanged();
+                //lAdapter.notifyDataSetChanged();
 
                 Intent i = new Intent(getApplicationContext(), ActivityTask.class);
                 i.putExtra("ID", list.get(list.size()-1).getId());

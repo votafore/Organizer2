@@ -1,4 +1,4 @@
-package com.votafore.organizer.active;
+package com.votafore.organizer.model;
 
 
 public interface ITaskData {

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.votafore.organizer.R;
 import com.votafore.organizer.TaskWidget;
+import com.votafore.organizer.model.ITaskData;
 import com.votafore.organizer.model.TaskManager;
 import com.votafore.organizer.support.HandlingService;
 

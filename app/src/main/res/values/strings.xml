@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Organizer</string>
+
+
+    <!-- меню -->
+    <string name="menu_task_save">Сохранить</string>
+    <string name="menu_task_edit">Изменить</string>
+
+    <string name="menu_main_settings">Настройки</string>
+    <string name="menu_main_add">Новая задача</string>
+
+    <!-- строки для страниц -->
+    <string name="btn_save">OK</string>
+    <string name="title_activity_task">задача</string>
+    <string name="settings">Настройки</string>
+
+    <!-- Строки для страницы настроек расписания по дням недели -->
+    <string name="week_loop">Повторять каждую</string>
+    <string name="week_loop_cont">неделю</string>
+
+    <string name="mnd">понедельник</string>
+    <string name="tud">вторник</string>
+    <string name="wnd">среда</string>
+    <string name="thd">четверг</string>
+    <string name="frd">пятница</string>
+    <string name="std">суботта</string>
+    <string name="snd">воскресенье</string>
+
+    <!-- Строки для страницы настроек расписания по месяцам -->
+
+    <string name="jan">Январь</string>
+    <string name="fb">Февраль</string>
+    <string name="mch">Март</string>
+    <string name="apr">Апрель</string>
+    <string name="may">Май</string>
+    <string name="jn">Июнь</string>
+    <string name="jl">Июль</string>
+    <string name="ag">Август</string>
+    <string name="sp">Сентябрь</string>
+    <string name="oct">Октябрь</string>
+    <string name="nov">Ноябрь</string>
+    <string name="dec">Декабрь</string>
+    <string name="title_activity_activity_dialog_task">Уведомление</string>
+
+    <string name="title_activity_dialog_task_list">Задачи на сегодня</string>
+
+    <string name="appwidget_text">На сегодня</string>
+    <string name="add_widget">Add widget</string>
+
+</resources>

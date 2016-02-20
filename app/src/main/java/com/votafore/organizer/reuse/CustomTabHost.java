@@ -1,4 +1,4 @@
-package com.votafore.organizer.active;
+package com.votafore.organizer.reuse;
 
 
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
-import com.votafore.organizer.active.SlidingTabStrip;
 
 public class CustomTabHost extends HorizontalScrollView {
 

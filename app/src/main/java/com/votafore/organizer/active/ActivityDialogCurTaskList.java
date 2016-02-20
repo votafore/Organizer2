@@ -27,7 +27,7 @@ public class ActivityDialogCurTaskList extends Activity{
 
         List<TaskManager.Task> mList = TaskManager.getInstance(getApplicationContext()).getTodayTask();
 
-        ListAdapter mAdapter = new ListAdapter(getApplicationContext(), R.layout.cur_task_list_item, mList);
+        ListAdapter mAdapter = new ListAdapter(getApplicationContext(), R.layout.item_cur_task, mList);
         curTaskList.setAdapter(mAdapter);
 
         Button closeBtn = (Button)findViewById(R.id.close_dialog);
