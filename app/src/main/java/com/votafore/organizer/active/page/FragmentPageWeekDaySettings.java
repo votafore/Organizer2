@@ -1,4 +1,4 @@
-package com.votafore.organizer.active;
+package com.votafore.organizer.active.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,11 +18,20 @@ public class FragmentPageWeekDaySettings extends Fragment {
 
     ITaskData ITask;
 
+    public static FragmentPageWeekDaySettings getInstance(ITaskData i_data){
+
+        Bundle args = new Bundle();
+        FragmentPageWeekDaySettings f = new FragmentPageWeekDaySettings();
+
+        f.setArguments(args);
+        f.setInterface(i_data);
+
+        return f;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        ITask = (ITaskData)getActivity();
 
         View v = inflater.inflate(R.layout.fragment_week_settings, container, false);
 
@@ -33,8 +42,8 @@ public class FragmentPageWeekDaySettings extends Fragment {
         mList.add((CheckBox)v.findViewById(R.id.ch_wnd));
         mList.add((CheckBox)v.findViewById(R.id.ch_thd));
         mList.add((CheckBox)v.findViewById(R.id.ch_frd));
-        mList.add((CheckBox)v.findViewById(R.id.ch_std));
-        mList.add((CheckBox)v.findViewById(R.id.ch_snd));
+        mList.add((CheckBox) v.findViewById(R.id.ch_std));
+        mList.add((CheckBox) v.findViewById(R.id.ch_snd));
 
         for(int i = 0; i < mList.size(); i++){
 
@@ -54,5 +63,9 @@ public class FragmentPageWeekDaySettings extends Fragment {
         }
 
         return v;
+    }
+
+    public void setInterface(ITaskData i_data){
+        ITask = i_data;
     }
 }

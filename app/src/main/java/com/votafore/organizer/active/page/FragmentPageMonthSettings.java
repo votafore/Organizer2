@@ -1,4 +1,4 @@
-package com.votafore.organizer.active;
+package com.votafore.organizer.active.page;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +17,17 @@ import java.util.ArrayList;
 public class FragmentPageMonthSettings extends Fragment {
 
     ITaskData ITask;
+
+    public static FragmentPageMonthSettings getInstance(ITaskData i_data){
+
+        Bundle args = new Bundle();
+        FragmentPageMonthSettings f = new FragmentPageMonthSettings();
+
+        f.setArguments(args);
+        f.setInterface(i_data);
+
+        return f;
+    }
 
     @Nullable
     @Override
@@ -59,5 +70,9 @@ public class FragmentPageMonthSettings extends Fragment {
         }
 
         return v;
+    }
+
+    public void setInterface(ITaskData i_data){
+        ITask = i_data;
     }
 }

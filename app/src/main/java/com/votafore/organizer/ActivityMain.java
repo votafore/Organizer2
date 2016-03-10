@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -129,14 +130,12 @@ public class ActivityMain extends AppCompatActivity {
             listItem.setLayoutParams(new GridView.LayoutParams(250, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             TextView title = (TextView)listItem.findViewById(R.id.template_task_list_item_title);
-            //TextView descr = (TextView)listItem.findViewById(R.id.template_task_list_item_description);
             TextView time = (TextView)listItem.findViewById(R.id.template_task_list_item_time);
 
             TaskManager.Task lTask = getItem(position);
 
             title.setText(lTask.getTitle());
-            //descr.setText(lTask.getDescription());
-            time.setText(lTask.getHour() + ":" + lTask.getMinute());
+            time.setText(DateFormat.format("HH:mm", lTask.getTime()));
 
             return listItem;
         }

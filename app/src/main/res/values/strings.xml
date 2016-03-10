@@ -14,6 +14,9 @@
     <string name="title_activity_task">задача</string>
     <string name="settings">Настройки</string>
 
+    <string name="title_hint">Краткое название</string>
+    <string name="title_description">Описание события</string>
+
     <!-- Строки для страницы настроек расписания по дням недели -->
     <string name="week_loop">Повторять каждую</string>
     <string name="week_loop_cont">неделю</string>

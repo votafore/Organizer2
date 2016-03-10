@@ -14,4 +14,6 @@
     <color name="cyan_200_trans">#8880DEEA</color>
     <color name="cyan_300_trans">#884DD0E1</color>
 
+    <color name="btn_bkg">#c0c0c0</color>
+
 </resources>
