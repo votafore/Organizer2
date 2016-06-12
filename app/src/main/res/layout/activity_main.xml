@@ -4,17 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.votafore.organizer.MainActivity"
+    tools:context="com.votafore.organizer.ActivityMain"
     android:background="@color/cyan_200">
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/task_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="250dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:gravity="center">
-    </GridView>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

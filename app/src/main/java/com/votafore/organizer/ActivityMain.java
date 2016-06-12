@@ -1,61 +1,52 @@
 package com.votafore.organizer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.votafore.organizer.active.ActivityTask;
 import com.votafore.organizer.model.TaskManager;
 
-import java.util.List;
-
 
 public class ActivityMain extends AppCompatActivity {
 
-    ListAdapter lAdapter;
-    TaskManager tManager;
-
     public static int FIRST_SERVICE_ALARM_ID = 10000;
 
-    //public static String START_SHEDULE = "com.votafore.organizer.START_SHEDULE";
+    public static final String TASK_ID = "TASK_ID";
+
+    TaskManager mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GridView lTaskList = (GridView)findViewById(R.id.task_list);
+        mManager = TaskManager.getInstance(getApplicationContext());
 
-        tManager = TaskManager.getInstance(getApplicationContext());
-        lAdapter = new ListAdapter(getApplicationContext(), R.layout.item_task, tManager.getTaskList());
+        TaskListAdapter mAdapter = new TaskListAdapter(mManager);
 
-        lTaskList.setAdapter(lAdapter);
+        RecyclerView mTaskList = (RecyclerView)findViewById(R.id.task_list);
+        mTaskList.setAdapter(mAdapter);
 
-        lTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent i = new Intent(getApplicationContext(), ActivityTask.class);
-                i.putExtra("ID", ((TaskManager.Task) parent.getAdapter().getItem(position)).getId());
-                startActivity(i);
-            }
-        });
+        mTaskList.setHasFixedSize(true);
+        mTaskList.setItemAnimator(new DefaultItemAnimator());
+        mTaskList.setLayoutManager(new GridLayoutManager(this,3));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        lAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -70,74 +61,65 @@ public class ActivityMain extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.add:
-                // если происходит попытка создать новую задачу, то создаем ее в базе данных
-                // и передаем ее ID для открытия формы редактирования
-                tManager.createNewTask();
-
-                List<TaskManager.Task> list = tManager.getTaskList();
-
-                lAdapter.setTaskList(list);
-                //lAdapter.notifyDataSetChanged();
-
-                Intent i = new Intent(getApplicationContext(), ActivityTask.class);
-                i.putExtra("ID", list.get(list.size()-1).getId());
-                startActivity(i);
+                //TODO: вставить код по созданию задачи
                 break;
         }
 
         return true;
     }
 
+    public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ItemHolder>{
 
+        private TaskManager mManager;
 
-    public class ListAdapter extends BaseAdapter {
-
-        private Context mContext;
-        private int mResLayout;
-        private List<TaskManager.Task> mTaskList;
-
-        public ListAdapter(Context context, int resLayout, List<TaskManager.Task> list) {
-
-            mContext = context;
-            mResLayout = resLayout;
-            mTaskList = list;
-        }
-
-        public void setTaskList(List<TaskManager.Task> list){
-            mTaskList = list;
+        public TaskListAdapter(TaskManager manager){
+            this.mManager = manager;
         }
 
         @Override
-        public long getItemId(int position) {
-            return 0;
+        public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
+            return new ItemHolder(v);
         }
 
         @Override
-        public int getCount() {
-            return mTaskList.size();
+        public void onBindViewHolder(ItemHolder holder, int position) {
+
+            TaskManager.Task curTask = mManager.getTaskList().get(position);
+
+            holder.mTitleView.setText(curTask.getTitle());
+            holder.mTimeView.setText(DateFormat.format("HH:mm", curTask.getTime()));
         }
 
         @Override
-        public TaskManager.Task getItem(int position) {
-            return mTaskList.get(position);
+        public int getItemCount() {
+            return mManager.getTaskList().size();
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-            View listItem = View.inflate(mContext, mResLayout, null);
+            public TextView mTitleView;
+            public TextView mTimeView;
 
-            listItem.setLayoutParams(new GridView.LayoutParams(250, ViewGroup.LayoutParams.WRAP_CONTENT));
+            public ItemHolder(View itemView) {
+                super(itemView);
 
-            TextView title = (TextView)listItem.findViewById(R.id.template_task_list_item_title);
-            TextView time = (TextView)listItem.findViewById(R.id.template_task_list_item_time);
+                itemView.setOnClickListener(this);
 
-            TaskManager.Task lTask = getItem(position);
+                mTitleView = (TextView)itemView.findViewById(R.id.template_task_list_item_title);
+                mTimeView = (TextView)itemView.findViewById(R.id.template_task_list_item_time);
+            }
 
-            title.setText(lTask.getTitle());
-            time.setText(DateFormat.format("HH:mm", lTask.getTime()));
+            @Override
+            public void onClick(View v) {
 
-            return listItem;
+                // при клике на задаче запускаем Activity с задачей
+                Intent i = new Intent(ActivityMain.this, ActivityTask.class);
+                i.putExtra(TASK_ID, mManager.getTaskList().get(getAdapterPosition()).getId());
+
+                startActivity(i);
+            }
         }
     }
 }

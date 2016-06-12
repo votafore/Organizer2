@@ -18,16 +18,53 @@ public class TaskManager {
     private static TaskManager mThis;
 
     private List<Task> mTaskList;
-    private DatabaseHandler db;
-    private Context mContext;
+   //private DatabaseHandler db;
 
-    private TaskManager(Context mContext){
-
-        this.mContext = mContext;
+    private TaskManager(Context ctx){
 
         // получим задачи из базы
-        db = new DatabaseHandler(mContext);
-        mTaskList = db.getAllTask();
+        //db = new DatabaseHandler(ctx);
+        //mTaskList = db.getAllTask();
+
+        mTaskList = new ArrayList<>();
+
+        Task task1, task2, task3, task4, task5;
+
+        task1 = new Task();
+        task1.setId(1);
+        task1.setTitle("test 1");
+        task1.setDate(2016,6,10);
+        task1.setTime(12,0);
+
+        task2 = new Task();
+        task2.setId(2);
+        task2.setTitle("test 2");
+        task2.setDate(2016,6,15);
+        task2.setTime(15,0);
+
+        task3 = new Task();
+        task3.setId(3);
+        task3.setTitle("test 3");
+        task3.setDate(2016,6,18);
+        task3.setTime(18,0);
+
+        task4 = new Task();
+        task4.setId(4);
+        task4.setTitle("test 4");
+        task4.setDate(2016,6,18);
+        task4.setTime(20,0);
+
+        task5 = new Task();
+        task5.setId(5);
+        task5.setTitle("test 5");
+        task5.setDate(2016,6,18);
+        task5.setTime(22,0);
+
+        mTaskList.add(task1);
+        mTaskList.add(task2);
+        mTaskList.add(task3);
+        mTaskList.add(task4);
+        mTaskList.add(task5);
     }
 
     public static TaskManager getInstance(Context mContext){
@@ -58,16 +95,16 @@ public class TaskManager {
 
     public void createNewTask(){
 
-        Task t = new Task();
-        db.addTask(t);
-
-        // сразу же обновим список
-        mTaskList = db.getAllTask();
+//        Task t = new Task();
+//        db.addTask(t);
+//
+//        // сразу же обновим список
+//        mTaskList = db.getAllTask();
     }
 
     public void saveTask(Task mTask){
 
-        db.updateTask(mTask);
+        //db.updateTask(mTask);
     }
 
     public List<Task> getTodayTask(){
