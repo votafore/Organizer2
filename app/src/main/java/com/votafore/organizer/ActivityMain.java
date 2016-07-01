@@ -32,6 +32,7 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mManager = TaskManager.getInstance(getApplicationContext());
+        mManager.createAdapter();
 
         RecyclerView mTaskList = (RecyclerView)findViewById(R.id.task_list);
         mTaskList.setAdapter(mManager.getListAdapter());

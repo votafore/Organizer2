@@ -50,4 +50,7 @@
     <string name="appwidget_text">На сегодня</string>
     <string name="add_widget">Add widget</string>
 
+    <!-- Строки для кнопок -->
+    <string name="btn_task_done">Сча сделаем ;)</string>
+
 </resources>

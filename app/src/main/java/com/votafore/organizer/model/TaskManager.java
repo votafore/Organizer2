@@ -1,8 +1,13 @@
 package com.votafore.organizer.model;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 
+import com.votafore.organizer.ActivityAlarm;
+import com.votafore.organizer.ActivityMain;
 import com.votafore.organizer.support.AdapterTaskList;
 import com.votafore.organizer.support.DatabaseHandler;
 
@@ -23,51 +28,9 @@ public class TaskManager {
 
         mContext = ctx;
 
-        mListAdapter = new AdapterTaskList(this);
-
         // получим задачи из базы
         db = new DatabaseHandler(mContext);
         mTaskList = db.getAllTask();
-
-//        mTaskList = new ArrayList<>();
-//
-//        Task task1, task2, task3, task4, task5;
-//
-//        task1 = new Task();
-//        task1.setId(1);
-//        task1.setTitle("test 1");
-//        task1.setDate(2016,6,10);
-//        task1.setTime(12,0);
-//
-//        task2 = new Task();
-//        task2.setId(2);
-//        task2.setTitle("test 2");
-//        task2.setDate(2016,6,15);
-//        task2.setTime(15,0);
-//
-//        task3 = new Task();
-//        task3.setId(3);
-//        task3.setTitle("test 3");
-//        task3.setDate(2016,6,18);
-//        task3.setTime(18,0);
-//
-//        task4 = new Task();
-//        task4.setId(4);
-//        task4.setTitle("test 4");
-//        task4.setDate(2016,6,18);
-//        task4.setTime(20,0);
-//
-//        task5 = new Task();
-//        task5.setId(5);
-//        task5.setTitle("test 5");
-//        task5.setDate(2016,6,18);
-//        task5.setTime(22,0);
-//
-//        mTaskList.add(task1);
-//        mTaskList.add(task2);
-//        mTaskList.add(task3);
-//        mTaskList.add(task4);
-//        mTaskList.add(task5);
     }
 
     public static TaskManager getInstance(Context mContext){
@@ -98,13 +61,9 @@ public class TaskManager {
         mListAdapter.setListener(listener);
     }
 
-
-
-
-
-
-
-
+    public void createAdapter(){
+        mListAdapter = new AdapterTaskList(this);
+    }
 
 
 
@@ -128,6 +87,25 @@ public class TaskManager {
             db.updateTask(mTask);
             mListAdapter.notifyItemChanged(mTaskList.indexOf(mTask));
         }
+
+        // установим "будильник" для запуска уведомления
+        List<Task> todayTask = getTodayTask();
+
+        // проверим попадает ли текущая задача в сегодняшние
+        // т.е. которые еще должны выполниться
+        if(todayTask.indexOf(mTask) == -1)
+            return;
+
+        PendingIntent pIntent = getPIntent(mTask);
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.set(Calendar.HOUR_OF_DAY  , mTask.getHour());
+        c.set(Calendar.MINUTE       , mTask.getMinute());
+        c.set(Calendar.SECOND       , 0);
+
+        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(mContext.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pIntent);
     }
 
     public void deleteTask(Task task){
@@ -138,6 +116,18 @@ public class TaskManager {
         mTaskList.remove(position);
 
         mListAdapter.notifyItemMoved(position, position);
+
+        PendingIntent pIntent = getPIntent(task);
+        pIntent.cancel();
+    }
+
+    public PendingIntent getPIntent(Task mTask){
+
+        Intent alarmI = new Intent(mContext, ActivityAlarm.class);
+        alarmI.setAction("notify");
+        alarmI.putExtra(ActivityMain.TASK_ID, mTask.getId());
+
+        return PendingIntent.getActivity(mContext, mTask.getId(), alarmI, PendingIntent.FLAG_ONE_SHOT);
     }
 
 

@@ -5,7 +5,7 @@
     android:layout_height="100dp"
     android:layout_width="match_parent"
     android:id="@+id/extraset_item"
-    card:cardBackgroundColor="#dcdcdc"
+    card:cardBackgroundColor="@color/indigo_500"
     card:cardElevation="4dp">
 
     <LinearLayout

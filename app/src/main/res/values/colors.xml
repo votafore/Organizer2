@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/cyan_500</color>
-    <color name="colorPrimaryDark">@color/cyan_700</color>
+    <color name="colorPrimary">@color/indigo_500</color>
+    <color name="colorPrimaryDark">@color/indigo_700</color>
     <color name="colorAccent">@color/amber_500</color>
 
     <color name="black_overlay">#66000000</color>
@@ -15,5 +15,17 @@
     <color name="cyan_300_trans">#884DD0E1</color>
 
     <color name="btn_bkg">#c0c0c0</color>
+
+    <color name="activity_bkg">#e8e8e8</color>
+
+
+
+
+
+    <color name="colorBackgroundMainDark">#1b0f42</color>
+    <color name="colorBackgroundMainLight">#4426A6</color>
+    <color name="backgroundViews">#33000000</color>
+
+    <color name="textLight">#B1A6DE</color>
 
 </resources>

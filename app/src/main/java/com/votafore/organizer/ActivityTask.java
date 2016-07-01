@@ -39,6 +39,7 @@ public class ActivityTask extends AppCompatActivity{
     TaskManager mManager;
 
     Task mTask;
+    Task mOriginal;
 
     ExtraSettingsAdapter mAdapter;
 
@@ -54,7 +55,14 @@ public class ActivityTask extends AppCompatActivity{
         Intent i = getIntent();
 
         mManager = TaskManager.getInstance(this);
-        mTask = mManager.getTask(i.getIntExtra(ActivityMain.TASK_ID, 0));
+        int id = i.getIntExtra(ActivityMain.TASK_ID, 0);
+
+        if (id != 0) {
+            mOriginal = mManager.getTask(id);
+            mTask = mOriginal.getClone();
+        }else{
+            mTask = new Task();
+        }
 
 
         //TextInputLayout     til_title        = (TextInputLayout)findViewById(R.id.textinputlayout_title);
@@ -170,13 +178,22 @@ public class ActivityTask extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        int index = -1;
+
+        if(mOriginal != null)
+            index = mManager.getTaskList().indexOf(mOriginal);
+
         switch(item.getItemId()) {
             case R.id.task_menu_save:
+
+                if(index >= 0)
+                    mManager.getTaskList().set(index, mTask);
+
                 mManager.saveTask(mTask);
 
                 break;
             case R.id.task_menu_delete:
-                mManager.deleteTask(mTask);
+                mManager.deleteTask(mOriginal);
         }
 
         finish();
